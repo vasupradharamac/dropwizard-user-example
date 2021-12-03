@@ -1,0 +1,50 @@
+<configuration>
+    <jdbc>
+        <driver>org.postgresql.Driver</driver>
+        <url>jdbc:postgresql://localhost/UserDB</url>
+        <user>admin</user>
+        <password>adminauth</password>
+    </jdbc>
+    <generator>
+        <database>
+            <name>org.jooq.meta.postgres.PostgresDatabase</name>
+
+            <includes>.*</includes>
+
+            <excludes>
+                UNUSED_TABLE # This table (unqualified name) should not be generated
+                | PREFIX_.* # Objects with a given prefix should not be generated
+                | SECRET_SCHEMA\.SECRET_TABLE # This table (qualified name) should not be generated
+                | SECRET_ROUTINE # This routine (unqualified name) ...
+                | (?i:databasechangelog)
+                | (?i:databasechangeloglock)
+            </excludes>
+            <inputSchema>public</inputSchema>
+
+            <forcedTypes>
+                <forcedType>
+                    <userType>com.fasterxml.jackson.databind.JsonNode</userType>
+                    <binding>com.company.example.providers.PostgresJSONJacksonBinding</binding>
+                    <includeTypes>JSONB</includeTypes>
+                </forcedType>
+                <forcedType>
+                    <name>INTEGER</name>
+                    <includeExpression>userId</includeExpression>
+                </forcedType>
+            </forcedTypes>
+        </database>
+        <generate>
+            <fluentSetters>true</fluentSetters>
+            <pojos>true</pojos>
+        </generate>
+        <target>
+            <packageName>com.company.example.database</packageName>
+            <directory>./src/main/java/</directory>
+        </target>
+
+        <name>com.company.codegen.CodeGenerator</name>
+        <strategy>
+            <name>com.company.codegen.AsInDatabaseStrategy</name>
+        </strategy>
+    </generator>
+</configuration>

@@ -1,0 +1,48 @@
+server:
+  applicationContextPath: /adm
+  applicationConnectors:
+    - type: http
+      port: 8080
+
+database:
+  driverClass: org.postgresql.Driver
+  user: walrus
+  password: 325c1c4c5c
+  url: jdbc:postgresql://localhost/walrusx?string=unspecified
+  validationQuery: "/* MyService Health Check */ SELECT 1"
+
+jooq:
+  # The flavor of SQL to generate. If not specified, it will be inferred from the JDBC connection URL.  (default: null)
+  dialect: POSTGRES
+  # DEPRECATED: Use `executeLogging` instead (default: no)
+  logExecutedSql: yes
+  # Whether to include schema names in generated SQL.  (default: yes)
+  renderSchema: yes
+  # How names should be rendered in generated SQL.  One of QUOTED, AS_IS, LOWER, or UPPER.  (default: QUOTED)
+  renderNameStyle: QUOTED
+  # How keywords should be rendered in generated SQL.  One of LOWER, UPPER.  (default: UPPER)
+  renderKeywordStyle: LOWER
+  # Whether generated SQL should be pretty-printed.  (default: no)
+  renderFormatted: no
+  # How parameters should be represented.  One of INDEXED, NAMED, or INLINE.  (default: INDEXED)
+  paramType: INDEXED
+  # How statements should be generated; one of PREPARED_STATEMENT or STATIC_STATEMENT.  (default: PREPARED_STATEMENT)
+  statementType: PREPARED_STATEMENT
+  # Whether internal jOOQ logging should be enabled.  (default: no)
+  executeLogging: yes
+  # Whether optimistic locking should be enabled.  (default: no)
+  executeWithOptimisticLocking: no
+  # Whether returned records should be 'attached' to the jOOQ context.  (default: yes)
+  attachRecords: yes
+  # Whether primary-key fields should be updatable.  (default: no)
+  updatablePrimaryKeys: no
+
+httpClient:
+  timeout: 5000ms
+  connectionTimeout: 5000ms
+  timeToLive: 1h
+  cookiesEnabled: false
+  maxConnections: 1024
+  maxConnectionsPerRoute: 1024
+  keepAlive: 0ms
+  retries: 0
